@@ -8,14 +8,12 @@ void main() {
   ));
 }
 
-
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
-
   bool selecionado = true;
 
   TextEditingController zCoord = TextEditingController();
@@ -24,7 +22,7 @@ class _HomePageState extends State<HomePage> {
   String _infoText = 'Preencha os dados';
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  _resetFields(){
+  _resetFields() {
     zCoord.text = "";
     yCoord.text = "";
     xCoord.text = "";
@@ -35,7 +33,7 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  calculate(){
+  calculate() {
     double x = double.parse(xCoord.text);
     double y = double.parse(yCoord.text);
     double z = double.parse(zCoord.text);
@@ -45,22 +43,21 @@ class _HomePageState extends State<HomePage> {
     String rZ = "";
     String whrR = "";
 
-    if(selecionado){
-      rX = (x/8).toString();
+    if (selecionado) {
+      rX = (x / 8).toString();
       rY = (y).toString();
-      rZ = (z/8).toString();
+      rZ = (z / 8).toString();
       whrR = "Coordenadas no Nether: \n";
-    }else{
-      rX = (x*8).toString();
+    } else {
+      rX = (x * 8).toString();
       rY = (y).toString();
-      rZ = (z*8).toString();
+      rZ = (z * 8).toString();
       whrR = "Coordenadas no Overworld: \n";
     }
 
     setState(() {
-      _infoText = whrR + 'X: '+ rX + '\nY: ' + rY + '\nZ: ' + rZ;
+      _infoText = whrR + 'X: ' + rX + '\nY: ' + rY + '\nZ: ' + rZ;
     });
-
   }
 
   @override
@@ -69,135 +66,154 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         backgroundColor: Colors.green,
         centerTitle: true,
-        title: Text("SyncPortals", style: TextStyle(fontSize: 18),),
+        title: Text(
+          "SyncPortals",
+          style: TextStyle(fontSize: 18),
+        ),
         actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.refresh),
-              onPressed: () {
-                _resetFields();
-              },
-            ),
-          ],
+          IconButton(
+            icon: Icon(Icons.refresh),
+            onPressed: () {
+              _resetFields();
+            },
+          ),
+        ],
       ),
       backgroundColor: Colors.brown[800],
       body: Container(
-        child: SingleChildScrollView(
-          padding: EdgeInsets.all(15),
-          child: Form(
-            key: _formKey,
-            child: Column(              
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Expanded(
-                      child: FlatButton(
-                      color: selecionado ? Colors.green : Colors.blue,
-                      onPressed: (){
+          child: SingleChildScrollView(
+        padding: EdgeInsets.all(15),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Expanded(
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                        primary: Colors.white,
+                        backgroundColor:
+                            selecionado ? Colors.green : Colors.blue,
+                      ),
+                      onPressed: () {
                         setState(() {
-                          if(!selecionado){
+                          if (!selecionado) {
                             selecionado = !selecionado;
                           }
                         });
                       },
-                      child: Text("Overworld", style: TextStyle(color: Colors.white, fontSize: 18),),
-                    ),
-                    ),
-                    SizedBox(width: 10,),
-                    Expanded(
-                      child: FlatButton(                      
-                      color: selecionado ? Colors.deepOrangeAccent : Colors.green,
-                      onPressed: (){
-                        setState(() {
-                          if(selecionado){
-                            selecionado = !selecionado;
-                          }                          
-                        });},
-                      child: Text("Nether", style: TextStyle(color: Colors.white, fontSize: 18),),
-                    ),
-                    )
-                  ],
-                ),
-                SizedBox(height: 20,),
-                TextFormField(
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                      labelText: "Coordenada X",
-                      labelStyle: TextStyle(color: Colors.white)),
-                  textAlign: TextAlign.center,
-                  style:
-                      TextStyle(color: Colors.white, fontSize: 25),
-                  controller: xCoord,
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return "Preencha o X";
-                    }
-                  },
-                ),                 
-                TextFormField(
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                      labelText: "Coordenada Y",
-                      labelStyle: TextStyle(color: Colors.white)),
-                  textAlign: TextAlign.center,
-                  style:
-                      TextStyle(color: Colors.white, fontSize: 25),
-                  controller: yCoord,
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return "Preencha o Y";
-                    }
-                  },
-                ),
-                TextFormField(
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                      labelText: "Coordenada Z",
-                      labelStyle: TextStyle(color: Colors.white)),
-                  textAlign: TextAlign.center,
-                  style:
-                      TextStyle(color: Colors.white, fontSize: 25),
-                  controller: zCoord,
-                  validator: (value) {
-                    if (value.isEmpty) {
-                      return "Preencha o Z";
-                    }
-                  },
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 24, bottom: 20),
-                  child: Container(
-                    height: 55,
-                    child: RaisedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12)),
-                      onPressed: () {
-                        if (_formKey.currentState.validate()) {
-                          calculate();
-                        }
-                      },
                       child: Text(
-                        "CALCULAR",
-                        style: TextStyle(color: Colors.white, fontSize: 25),
+                        "Overworld",
+                        style: TextStyle(color: Colors.white, fontSize: 18),
                       ),
-                      color: Colors.green,
                     ),
                   ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(
+                    child: TextButton(
+                      style: ButtonStyle(
+                          foregroundColor:
+                              MaterialStateProperty.all<Color>(Colors.white),
+                          backgroundColor: selecionado
+                              ? MaterialStateProperty.all<Color>(
+                                  Colors.deepOrangeAccent)
+                              : MaterialStateProperty.all<Color>(Colors.green)),
+                      onPressed: () {
+                        setState(() {
+                          if (selecionado) {
+                            selecionado = !selecionado;
+                          }
+                        });
+                      },
+                      child: Text(
+                        "Nether",
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              TextFormField(
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                    labelText: "Coordenada X",
+                    labelStyle: TextStyle(color: Colors.white)),
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.white, fontSize: 25),
+                controller: xCoord,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return "Preencha o X";
+                  }
+                },
+              ),
+              TextFormField(
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                    labelText: "Coordenada Y",
+                    labelStyle: TextStyle(color: Colors.white)),
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.white, fontSize: 25),
+                controller: yCoord,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return "Preencha o Y";
+                  }
+                },
+              ),
+              TextFormField(
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                    labelText: "Coordenada Z",
+                    labelStyle: TextStyle(color: Colors.white)),
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.white, fontSize: 25),
+                controller: zCoord,
+                validator: (value) {
+                  if (value.isEmpty) {
+                    return "Preencha o Z";
+                  }
+                },
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 24, bottom: 20),
+                child: Container(
+                  height: 55,
+                  child: RaisedButton(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12)),
+                    onPressed: () {
+                      if (_formKey.currentState.validate()) {
+                        calculate();
+                      }
+                    },
+                    child: Text(
+                      "CALCULAR",
+                      style: TextStyle(color: Colors.white, fontSize: 25),
+                    ),
+                    color: Colors.green,
+                  ),
                 ),
-                Text(
-                  _infoText,
-                  textAlign: TextAlign.center,
-                  style:
-                      TextStyle(color: Colors.white, fontSize: 22),
-                ),
-              ],
-            ),
+              ),
+              Text(
+                _infoText,
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.white, fontSize: 22),
+              ),
+            ],
           ),
-        )
-      ),
+        ),
+      )),
     );
   }
 }
