@@ -16,7 +16,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  bool selecionado = false;
+  bool selecionado = true;
 
   TextEditingController zCoord = TextEditingController();
   TextEditingController yCoord = TextEditingController();
